@@ -21,20 +21,25 @@ public class BlockTile : MonoBehaviour
     
     [SerializeField] 
     private BlockType _type = BlockType.Big;
-    [SerializeField] 
-    private BlockColor _color = BlockColor.Blue;
     
+    [SerializeField]
+    private int _score = 10;
+    
+    public int Score => _score;
+    private int _id;
+    private BlockColor _color = BlockColor.Blue;
     private SpriteRenderer _renderer;
     private Collider2D _collider;
     
     private int _totalHits = 1;
     private int _currentHits = 0;
 
-    public void SetData(BlockColor color)
+    public void SetData(int id, BlockColor color)
     {
+        _id = id;
         _color = color;
     }
-
+    
     public void Init()
     {
         _currentHits = 0;
@@ -55,6 +60,7 @@ public class BlockTile : MonoBehaviour
         {
             _collider.enabled = false;
             gameObject.SetActive(false);
+            ArkanoidEvent.OnBlockDestroyedEvent?.Invoke(_id);
         }
         else
         {

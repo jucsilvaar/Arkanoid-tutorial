@@ -15,10 +15,6 @@ public class Ball : MonoBehaviour
     private Rigidbody2D _rb;
     private Collider2D _collider;
 
-    public void Start()
-    {
-        Init();
-    }
 
     public void Init()
     {
@@ -27,6 +23,12 @@ public class Ball : MonoBehaviour
         
         _collider.enabled = true;
         _rb.velocity = Random.insideUnitCircle.normalized * _initSpeed;
+    }
+
+    public void Hide()
+    {
+        _collider.enabled = false;
+        gameObject.SetActive(false);
     }
     
     void FixedUpdate()
@@ -58,7 +60,10 @@ public class Ball : MonoBehaviour
         }
 
         _rb.velocity = velocity;
+
+        
     }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         BlockTile blockTileHit;
@@ -70,4 +75,6 @@ public class Ball : MonoBehaviour
         ContactPoint2D contactPoint = other.contacts[0];
         blockTileHit.OnHitCollision(contactPoint);
     }
+
+    
 }
