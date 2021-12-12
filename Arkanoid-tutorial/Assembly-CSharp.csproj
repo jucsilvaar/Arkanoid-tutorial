@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scr\Ball.cs" />
+     <Compile Include="Assets\Scr\Paddle.cs" />
      <None Include="Assets\Packables\Sprites\Breakout Tile Set Free\Sprite Sheet\Breakout_Tile_Free.xml" />
      <None Include="Assets\Packables\Sprites\Breakout Tile Set Free\License.txt" />
     <Reference Include="UnityEngine">
