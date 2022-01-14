@@ -16,6 +16,7 @@ public class ArkanoidController : MonoBehaviour
     
     private int _currentLevel = 0;
     private int _totalScore = 0;
+    
     private Ball _ballPrefab = null;
     private List<Ball> _balls = new List<Ball>();
     
@@ -43,9 +44,12 @@ public class ArkanoidController : MonoBehaviour
     private void InitGame()
     {
         _currentLevel = 0;
-        _totalScore = 0;
+        
         _gridController.BuildGrid(_levels[0]);
         SetInitialBall();
+        
+        ArkanoidEvent.OnGameStartEvent?.Invoke();
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(0, _totalScore);
     }
     
     private void SetInitialBall()
@@ -95,17 +99,20 @@ public class ArkanoidController : MonoBehaviour
             ClearBalls();
             
             Debug.Log("Game Over: LOSE!!!");
+            ArkanoidEvent.OnGameOverEvent?.Invoke();
         }
     }
     
     private void OnBlockDestroyed(int blockId)
     {
-
+        
         BlockTile blockDestroyed = _gridController.GetBlockBy(blockId);
         if (blockDestroyed != null)
         {
             _totalScore += blockDestroyed.Score;
+            ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(blockDestroyed.Score, _totalScore);
         }
+        
         
         if (_gridController.GetBlocksActive() == 0)
         {
@@ -122,5 +129,28 @@ public class ArkanoidController : MonoBehaviour
             }
 
         }
+    }
+    public  void Points50PowerUp()
+    {
+        _totalScore += 50;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(50, _totalScore);
+    }
+
+    public  void Points100PowerUp()
+    {
+        _totalScore += 100;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(100, _totalScore);
+    }
+
+    public  void Points250PowerUp()
+    {
+        _totalScore += 250;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(250, _totalScore);
+    }
+
+    public  void Points500PowerUp()
+    {
+        _totalScore += 500;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(500, _totalScore);
     }
 }

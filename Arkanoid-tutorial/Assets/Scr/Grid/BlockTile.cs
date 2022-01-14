@@ -61,6 +61,7 @@ public class BlockTile : MonoBehaviour
             _collider.enabled = false;
             gameObject.SetActive(false);
             ArkanoidEvent.OnBlockDestroyedEvent?.Invoke(_id);
+            SpawnPowerUps(contactPoint);
         }
         else
         {
@@ -82,5 +83,47 @@ public class BlockTile : MonoBehaviour
         }
 
         return Resources.Load<Sprite>(path);
+    }
+    private void  SpawnPowerUps(ContactPoint2D contactPoint)
+    {
+        if(Random.value<0.5f)
+        {
+            float randomPUp;
+            randomPUp = Random.value;
+            if(randomPUp<0.15f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/powerslow"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.3f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/powerfast"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.45f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/powerbig"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.6f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/powershort"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.7f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/power50"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.8f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/power100"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.9f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/power250"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<=1f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/power500"),contactPoint.point,Quaternion.identity);
+            }
+
+            }
+
     }
 }
